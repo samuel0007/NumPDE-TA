@@ -1,0 +1,415 @@
+\input{../instructions_header.tex}
+
+\begin{document}
+
+\ExerciseClass{1}
+
+\marginnote{%
+The objectives section lists the goals we aim to achieve with this
+exercise class. It is mostly up to you, teaching assistants, to decide
+how you are going to achieve these goals. To save your time, we have
+prepared a lesson plan with classroom activities that aim to achieve the
+listed goals. You can choose whether you are going to use the provided
+activities or design your own, whether you are going to follow the given
+order or do the activities in a different one. In rare cases, the lesson
+plan will contain activities, which you have to do (for example,
+self-assessments); they are marked in red.}[1cm]
+
+\begin{Objectives}
+\item \label{o:welcome}
+    Create a welcoming atmosphere for your students.
+\item \label{o:administrative}
+    Explain to students how the course is organised.
+\item \label{o:expert}
+    Explain to students how to use \Expert{}.
+\item \label{o:assess}
+    Assess the prior programming knowledge of your students.
+\end{Objectives}
+
+\marginnote{%
+The lesson plan contains a large margin which you can use for your
+notes. If you know \LaTeX, you can also edit the document directly by
+using the GitLab web IDE. The source code is available at
+\url{https://gitlab.inf.ethz.ch/OU-LECTURERS/teaching/computer-science-introduction/}.
+GitLab should automatically build the PDF each time you commit your
+changes. If you have any questions, do not hesitate to contact
+the head TA.}[2em]
+\listofpreparationtask
+
+\marginnote{The time in parenthesis gives an estimate how long a
+particular section should take. When reviewing the instructions, please
+check if the estimate makes sense to you. This white space on the side
+can be used for your notes.}[3.5cm]
+\tableofcontents
+
+\newpage
+
+\OptionalSection{Introduction}{20}
+
+\marginnote{%
+The text in grey boxes are directed at you, teaching assistants. They
+provide checklists and additional explanations.}[0.5cm]
+
+\begin{Preparation}
+    \PreparationBeforeClass{%
+        Download the slides with the organisational information.}
+    \PreparationBeforeClass{%
+        Check early enough if the beamer works and the slides and
+        programming environment are properly visible.}
+\end{Preparation}
+
+\SubSectionWithTime{Introduce Yourself}{2}{\slides}
+
+Welcome your students. Show the \slide{2} and briefly introduce yourself
+to your class\footnote{If you are interested you can find some advice
+how to start the first class in the following handout:
+\url{https://polybox.ethz.ch/index.php/s/qhIJVzhSKtYg3QY/download}.}:
+\begin{enumerate}
+    \item
+        Say your name.
+    \item
+        Say what are you studying and why it is interesting to you (in
+        simple words!).
+\end{enumerate}
+
+Also say what programming experience you have and why do you think this
+course is important.
+
+\SubSectionWithTime{Get to Know Your Students}{15}{\slides}
+
+Keep the same slide with questions (\slide{2}) and ask each student to
+very briefly answer both of them (30 seconds per
+student)\footnote{This learning activity is called “Whip (Around)” and
+it was taken from Kimberly D. Tanner paper “Structure Matters:
+Twenty-One Teaching Strategies to Promote Student Engagement and
+Cultivate Classroom Equity”
+(\url{https://polybox.ethz.ch/index.php/s/sSwgHBCQgihxC3m/download}).}.
+
+\MandatorySection{Administrative Matters}{15}
+
+\SubSectionWith{High Level Course Organisation}{\slides}
+
+\marginnote{%
+The quoted text is the text that you should tell to students \strong{in
+your own words}.}[1cm]
+
+\slide{3}:
+\begin{quote}
+    The primary objective of this course is to learn programming C++.
+
+    We are going to check whether you achieved this objective in the
+    exam during the winter examination session.
+
+    To perform well in the exam, you need to be able to program and to
+    deal with the exam environment.
+
+    To help you to learn to deal with both of them, we provide several
+    “services”: lectures, weekly and bonus exercises, exercise sessions,
+    self-assessments and StudyCenter.
+\end{quote}
+
+\quest
+
+\SubSectionWith{Weekly Schedule}{\slides}
+
+\slide{4}:
+\begin{quote}
+    New exercises are released every Monday.
+
+    Then, there is a lecture covering the material necessary to solve
+    the exercises.
+
+    We are going to practice this material in the first exercise session
+    that follows the lecture.
+
+    If you have questions about the material, you can come to StudyCenter 
+    (check the website on which days it is offered) to ask questions.
+
+    You have ["one week" if IFMP/CSE else "two weeks"] to solve the exercises. Please note that the
+    deadline is on Monday 18:00 and that late submissions are not accepted.
+
+    After the exercise submission deadline, I will provide feedback to
+    your weekly exercise submissions. We will discuss the most common
+    misconceptions in the exercise session that is going to be one week
+    after the submission deadline.
+\end{quote}
+
+\quest
+
+\SubSectionWith{Weekly and Bonus Exercises}{\slides}
+
+\slide{5}:
+\begin{quote}
+    All exercises will be managed in our online platform \Expert{}.
+
+    There are two types of exercises. The first type of exercises is
+    weekly exercises. The tasks of weekly exercises are usually very
+    small and the purpose of them is to practice the material that was
+    given in the lecture. By solving these exercises you will earn
+    experience points.
+
+    By earning enough experience points, you can unlock bonus exercises.
+    On \Expert{}, you can see which weekly exercises give you experience
+    points for which bonus tasks. As a rule of thumb, you will need to
+    obtain about two thirds of all possible experience points to unlock
+    the bonus exercise.
+
+    The purpose of bonus exercises is to practice combining knowledge
+    from different topics. There are going to be three bonus exercises.
+    Obtaining 2/3 of possible points from bonus exercises allows earning
+    a maximum bonus of 0.25 towards your final grade.
+
+    It is important to remember that for solving exercises, it is 
+    sufficient to use the constructs that were introduced in the course. 
+    Furthermore, pay attention not to use constructs that are forbidden 
+    in the task description. Note that the autograder might impose 
+    further restrictions (such as not using global variables) that might 
+    not be explicitly stated in the task description. Further note that 
+    warnings are treated as errors. Thus, check the output of the autograder 
+    carefully to avoid getting 0 points.
+\end{quote}
+
+\quest
+
+\SubSectionWith{Exercise Sessions}{\slides}
+
+\slide{7}:
+\begin{quote}
+    The purpose of the exercise sessions is to prepare you for solving
+    future and past exercises.
+
+    This means that during the exercise sessions we will revise some of
+    the topics you need to solve future exercises and discuss common
+    misunderstandings of past exercises.
+
+    Your active participation is important! We plan to have mostly
+    interactive classroom activities and constructive discussion during
+    the exercise sessions.
+
+    As a result, we expect that you will actively participate by saying
+    your opinion, educated guesses, and asking questions.
+
+    Please note that since we are learning we expect you to make
+    mistakes. Therefore, do not be afraid to share your educated guesses
+    when you do not know the correct answer. It is much better to try to
+    participate, make mistakes, and learn from them than to passively
+    listen.
+\end{quote}
+
+\quest
+
+\begin{Explanation}
+    If you cannot answer a particular question you got from students,
+    feel free to forward it to the head TA or lecturers.
+\end{Explanation}
+
+\SubSectionWith{StudyCenter}{\slides}
+
+\slide{8}:
+\begin{quote}
+    The student association organizes so called StudyCenter. The idea of
+    this StudyCenter is that you can come and ask TAs questions which
+    you did not have a chance to ask during the exercise session.
+\end{quote}
+
+\quest
+
+\SubSectionWith{Self-Assessments}{\slides}
+
+\slide{9}:
+\begin{quote}
+    The purpose of self-assessments is to let you to get familiar with
+    the exam format and to get a chance to see where you have gaps.
+
+    There are going to be five self-assessments and some of them will
+    take place at the beginning of the exercise sessions.
+
+    Today we will have a pre-course self-assessment. Its purpose is to
+    better know your prior knowledge so that we can optimize the course
+    for you, so no reason for you to worry about it.
+
+    Next week, we will have the first real self-assessment. It will
+    cover the material from the C++ tutorial, which you can find on the
+    course website.
+\end{quote}
+
+\quest
+
+\SubSectionWith{Info and Contact}{\slides}
+
+\slide{10}:
+\begin{quote}
+    All information I presented can be found on the course website. More
+    specifically, please read the organisational information sheet.
+
+    If you have any questions about the course content, you can either
+    ask during the class or in the StudyCenter.
+
+    If you have any questions about exercises, ask me.
+
+    If you have any administrative questions, ask the head assistant.
+\end{quote}
+
+\quest
+
+\OptionalSection{How to use \Expert{}}{10}
+
+\begin{Explanation}
+    The goal of this activity is to ensure that all students can access
+    \Expert{} and know how to use it.
+\end{Explanation}
+
+\SubSectionWithTime{Hello World}{10}{\ide}
+
+\begin{Preparation}
+    \PreparationBeforeClass{%
+        Check that you have internet and can access \Expert{}.}
+    \PreparationBeforeClass{%
+        Make sure that you do not show the completed tasks of the first
+        exercise. You can delete your existing code by clicking the
+        trash bin icon next to the exercise.}
+\end{Preparation}
+
+Ask students to take out their laptops and follow you (do not forget to
+ask if everyone successfully completed the step):
+\begin{enumerate}
+    \item Open \url{https://expert.ethz.ch} and navigate to the "Exercises" 
+        tab.
+    \item
+        Click on “Task 1: Hello World”, this will open the
+        task in the IDE.
+    \item
+        Show that the students can show/hide the task description by
+        clicking on “Task”.
+    \item
+        Click on “hello.cpp” to open the file for editing.
+    \item
+        Ask students to dictate what you should write.
+    \item
+        Show that the students can compile the program by clicking on a
+        green gear icon.
+    \item
+        Show that the students can run the program by clicking on a
+        green triangle icon.
+    \item
+        Show that the students can run our tests by clicking on a green
+        flask icon.
+    \item
+        Show that the students can submit their solution by clicking on
+        “Create new submission”. Tell the students that you will provide
+        feedback about their best submission and that they should not
+        forget to submit.
+    \item
+        \strong{Important (new!):} explain to students that their solutions
+        must pass all tests in order for them to get XP.
+    \item
+        \strong{Important (new!):} also say to the students that in the
+        exam only compiling programs will be accepted and that we are
+        going to use different tests for determining the final grade.
+    \item
+        \strong{Important:} show to students that the auto-grader can be
+        sometimes very picky. For example, that it does not accept the
+        program if the exclamation mark (“!”) is missing.
+\end{enumerate}
+
+\quest
+
+Remind to students that at home they should do the C++ tutorial linked
+on the website.
+
+\MandatorySection{Self-Assessment 0}{35}
+
+\begin{Preparation}
+    \PreparationBeforeClass{%
+        Check that you can access Self-Assessment 0.}
+\end{Preparation}
+
+\begin{Explanation}
+    Since this is an introductory programming course, the students are
+    not required to have any prior programming experience. Therefore,
+    try to make sure that students who do not have any prior programming
+    experience do not feel demotivated.
+\end{Explanation}
+
+\strong{Before} starting with the self-assessment, please tell students
+the following:
+
+\begin{quote}
+    We know that some of you learned to program in school. However, we
+    neither know how many of you learned programming, nor at which
+    level. Therefore, to make the course more relevant and interesting,
+    we would like learn about your programming experience.
+
+    The sole purpose of this assessment is to improve the course and,
+    therefore, your performance is not going to have any consequences
+    for you. Also, if you have no experience in programming, do not
+    worry; this is expected. However, even if you have no experience, we
+    still encourage you to at least try to guess the answers.
+\end{quote}
+
+Ask students to open the self-assessment and start working on it.
+
+\strong{After} the self assessment, please tell students the following:
+
+\begin{quote}
+    If you are interested, you can see the master solution of the
+    self-assessment in Moodle directly. During this course you will
+    learn all the concepts tested in this assessment and many more.
+
+    To even out the differences in your background knowledge, we have
+    prepared a tutorial that covers the basic concepts, which you will
+    find on the course website. You should go over it until the next
+    week when we are going to have the first real self-assessment. That
+    self-assessment will cover the material from the tutorial.
+\end{quote}
+
+\OptionalSection{Program Tracing with Python Tutor}{10}
+
+\begin{Explanation}
+    Python Tutor is a tool that allows visualising program execution.
+    This is useful for beginners who are struggling to understand the
+    language semantics. Unfortunately, the service sometimes experiences
+    a downtime. If this happens during your exercise session, just do
+    the exercise entire on the blackboard and point out that such
+    service exists which they can use for checking their solutions.
+\end{Explanation}
+
+Either write or display via projector the following program on the
+blackboard (this program corresponds to question 6 from self-assessment
+0):
+\begin{lstlisting}
+int main() {
+  int x = 3;
+  int y = 8;
+  int z;
+  z = x;
+  x = y;
+  y = z;
+  return 0;
+}
+\end{lstlisting}
+
+On the blackboard, draw a table with local variables:
+
+\begin{tabular}{|l|p{2cm}|}
+\hline
+x &  \\ \hline
+y &  \\ \hline
+z &  \\ \hline
+\end{tabular}
+
+Together with students, execute the program step by step and fill in the
+variable values into the table similarly to the Python Tutor
+visualisation. However, instead of erasing the old value it is better to
+cross it out so that students can still see the old value.
+
+Show to students that they can use Python Tutor to check if they
+executed the program correctly:
+
+\url{http://pythontutor.com/cpp.html#mode=display}
+
+Direct link to the example:
+
+\url{http://pythontutor.com/cpp.html#code=int%20main%28%29%20%7B%0A%20%20int%20x%20%3D%203%3B%0A%20%20int%20y%20%3D%208%3B%0A%20%20int%20z%3B%0A%20%20z%20%3D%20x%3B%0A%20%20x%20%3D%20y%3B%0A%20%20y%20%3D%20z%3B%0A%20%20return%200%3B%0A%7D&curInstr=0&mode=display&origin=opt-frontend.js&py=cpp&rawInputLstJSON=%5B%5D}
+
+\end{document}

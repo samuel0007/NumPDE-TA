@@ -1,0 +1,305 @@
+%Header for the instruction files
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%euopean version of article, because paper format is A4
+\documentclass{scrartcl}
+
+\usepackage[a4paper, left=5mm, right=10cm, top=1cm, marginparwidth=9cm]{geometry}
+
+%UTF-8, because want decent encoding
+\usepackage[utf8]{inputenc}
+
+%\usepackage[ngerman]{babel}
+
+%for ae ue oe
+%\usepackage{ae}
+\usepackage[T1]{fontenc}
+
+%better monospaced font
+\usepackage[scaled=0.8]{beramono}
+
+%to have math symbols available
+\usepackage{amsmath,amssymb,euscript}
+
+%pretty enumerations
+\usepackage{enumerate}
+
+%pictures 
+\usepackage{graphicx}
+%\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+%listings are a nice way to display source code
+\usepackage{listings, color}
+\usepackage[table]{xcolor}
+
+%define another version of green in addition to the 16 tex colors
+\definecolor{mygreen}{rgb}{0.133,0.545,0.133}
+
+%for weblinks
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{mdframed}
+
+\usepackage{tocloft}
+
+\usepackage{marginnote}
+
+\usepackage{tabularx}
+
+\usepackage{ textcomp }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COMMANDS AND SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%noindent, because text passages are very short to begin with
+\setlength\parindent{0pt}
+
+%instead the distance between lines is a bit bigger, if a paragraph ends
+%this is a default value, it is sometimes changed locally, for example whenever itemize is used
+%\setlength{\parskip}{1.0cm plus4mm minus3mm}
+
+%use these commands when you want to create a list of points using itemize
+%the distance between paragraphs defined above makes lists look very bad, use /nogap before creating a list and \gap after to restore settings
+\newcommand{\nogap}{}%\setlength{\parskip}{0.0cm}}
+\newcommand{\gap}{}%\setlength{\parskip}{1.0cm plus4mm minus3mm}}
+
+
+%command that configures the code listings to be in a box with line numbers to the left
+%it also makes sure that there is space between the last paragraph and the source code, so make sure you use this command before every 
+%listing of a complete program
+\newcommand{\numbersleft}{ 
+\setlength{\parskip}{0cm}
+{\scriptsize \mbox{}} \\ 
+\setlength{\parskip}{1.0cm plus4mm minus3mm}
+\lstset{ %
+  language=C++, % choose the language of the code
+  basicstyle=\footnotesize\ttfamily, % the size of the fonts that are used for the code
+  numbers=left, % where to put the line-numbers
+  numberstyle=\footnotesize\ttfamily\color[rgb]{0.6,0.6,0.6}, % the size of the fonts that are used for the line-numbers
+  stepnumber=1, % the step between two line-numbers. If it's 1 each line
+  xleftmargin=1mm,
+  xrightmargin=1mm,
+  % will be numbered
+  numbersep=10pt, % how far the line-numbers are from the code
+  backgroundcolor=\color{white}, % choose the background color. You must add \usepackage{color}
+  showspaces=false, % show spaces adding particular underscores
+  showstringspaces=false, % underline spaces within strings
+  showtabs=false, % show tabs within strings adding particular underscores
+  %frame=l, % adds a frame around the code
+  frame=single,
+  tabsize=4, % sets default tabsize to 2 spaces
+  breaklines=true, % sets automatic line breaking
+  breakatwhitespace=false, % sets if automatic breaks should only happen at whitespace
+  % also try caption instead of title
+  escapeinside={\%*}{*)}, % if you want to add a comment within your code
+  morekeywords={*,...}, % if you want to add more keywords to the set
+  keywordstyle=\color[rgb]{0,0,1},
+  commentstyle=\color[rgb]{0.133,0.545,0.133}\textit,
+  stringstyle=\color[rgb]{0.627,0.126,0.941},
+}}
+
+%command that configures the code listings to be without a box and without line numbers to the left
+%it also makes sure that there is space between the last paragraph and the source code, so make sure you use this command before every listing which
+%is just a code snippet
+\newcommand{\nonumbers}{
+\setlength{\parskip}{0cm}
+{\scriptsize \mbox{}} \\ 
+\setlength{\parskip}{1.0cm plus4mm minus3mm}
+\lstset{ %
+  language=C++, % choose the language of the code
+  basicstyle=\footnotesize\ttfamily, % the size of the fonts that are used for the code
+  numbers=none, % where to put the line-numbers
+  numberstyle=\footnotesize\ttfamily\color[rgb]{0.6,0.6,0.6}, % the size of the fonts that are used for the line-numbers
+  stepnumber=1, % the step between two line-numbers. If it's 1 each line
+  xleftmargin=4mm,
+  % will be numbered
+  numbersep=5pt, % how far the line-numbers are from the code
+  backgroundcolor=\color{white}, % choose the background color. You must add \usepackage{color}
+  showspaces=false, % show spaces adding particular underscores
+  showstringspaces=false, % underline spaces within strings
+  showtabs=false, % show tabs within strings adding particular underscores
+  frame=none, % adds a frame around the code
+%  frame=single,
+  tabsize=4, % sets default tabsize to 2 spaces
+  breaklines=true, % sets automatic line breaking
+  breakatwhitespace=false, % sets if automatic breaks should only happen at whitespace
+  % also try caption instead of title
+  escapeinside={\%*}{*)}, % if you want to add a comment within your code
+  morekeywords={*,...}, % if you want to add more keywords to the set
+  keywordstyle=\color[rgb]{0,0,1},
+  commentstyle=\color[rgb]{0.133,0.545,0.133}\textit,
+  stringstyle=\color[rgb]{0.627,0.126,0.941},
+}}
+
+
+%default configuration for lstset, so lstinline fragments are displayed correctly before the first lstlisting appears
+\lstset{ %
+  language=C++, % choose the language of the code
+  basicstyle=\footnotesize\ttfamily, % the size of the fonts that are used for the code
+  numbers=none, % where to put the line-numbers
+  numberstyle=\footnotesize\ttfamily\color[rgb]{0.6,0.6,0.6}, % the size of the fonts that are used for the line-numbers
+  stepnumber=1, % the step between two line-numbers. If it's 1 each line
+  xleftmargin=4mm,
+  % will be numbered
+  numbersep=5pt, % how far the line-numbers are from the code
+  backgroundcolor=\color{white}, % choose the background color. You must add \usepackage{color}
+  showspaces=false, % show spaces adding particular underscores
+  showstringspaces=false, % underline spaces within strings
+  showtabs=false, % show tabs within strings adding particular underscores
+  frame=none, % adds a frame around the code
+%  frame=single,
+  tabsize=4, % sets default tabsize to 2 spaces
+  breaklines=true, % sets automatic line breaking
+  breakatwhitespace=false, % sets if automatic breaks should only happen at whitespace
+  % also try caption instead of title
+  escapeinside={\%*}{*)}, % if you want to add a comment within your code
+  morekeywords={*,...}, % if you want to add more keywords to the set
+  keywordstyle=\color[rgb]{0,0,1},
+  commentstyle=\color[rgb]{0.133,0.545,0.133}\textit,
+  stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+%newcommands for exercises and solutions
+\newcounter{excounter} \setcounter{excounter}{0}
+\newcounter{partexcounter} \setcounter{partexcounter}{0}
+\newcommand{\exercise}[1]{\stepcounter{excounter}\setcounter{partexcounter}{0}\vspace*{10px} \noindent \textbf{\textsf{Exercise \arabic{excounter})\quad #1}}\quad \\}
+\newcommand{\partexercise}{\stepcounter{partexcounter}\noindent \textbf{\textsf{(\alph{partexcounter})}}\quad}
+
+\newcounter{partsolcounter} \setcounter{partsolcounter}{0}
+\newcommand{\solution}[1]{\vspace*{10px} \noindent \textbf{\textsf{Solution \arabic{excounter})}} \quad \textit{#1}\\}
+\newcommand{\partsolution}{\stepcounter{partsolcounter} \noindent \textbf{\textsf{(\alph{partsolcounter})}}\\}
+
+
+%reminder to answer students' questions
+\newcommand{\quest}{\begin{center}
+                    \Large{\textit{Questions?}}
+                    \end{center}
+}
+
+
+% header and footer definitions if someone wants to introduce headers and footers to the sheets
+%
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\fancyhf{}
+%
+% upper right
+%\fancyhead[R]{\textsf{Exercise something}}
+%
+% upper left 
+%\fancyhead[L]{whatever}
+%
+% upper middle
+%\fancyhead[C]{\textbf{Exercise Class 1}}
+%
+% lower middle
+%\fancyfoot[C]{\textsf{Seite \thepage}}
+%
+% lower left 
+%\fancyfoot[L]{\textsf{\today}}
+%
+% lower right
+%\fancyfoot[R]{\textsf{blabla}}
+
+\newcommand{\strong}[1]{\textbf{#1}}
+\newcommand{\slide}[1]{\textbf{slide #1}}
+\newcommand{\critical}[1]{\textcolor{red}{\textbf{#1}}}
+\newcommand{\TODO}[1]{\textbf{TODO: #1}}
+\newcommand{\Expert}{[code]expert}
+\newcommand{\Codeboard}{Codeboard}
+\newcommand{\ExerciseClass}[1]{%
+\begin{center}
+	\LARGE{\textbf{\textsf{Exercise Class \the\numexpr #1 \relax}}}
+\end{center}}
+
+\newcommand{\blackboard}{blackboard}
+\newcommand{\slides}{slides}
+\newcommand{\ide}{programming environment}
+\newcommand{\PreparationSection}[1]{\section{\textcolor{red}{Preparation: #1}}}
+\newcommand{\ImportantSection}[2]{\section{\textcolor{red}{#1} (#2 min.)}}
+\newcommand{\MandatorySection}[2]{\section{\textcolor{red}{#1} (#2 min.)}}
+\newcommand{\OptionalSection}[2]{\section{#1 (#2 min.)}}
+\newcommand{\AdditionalMaterialSection}[2]{%
+\marginnote{%
+    The additional material sections provide some additional classroom
+    activities which you can use in case you decide that the provided
+    lesson plan does not work for you.
+}[1cm]
+\section{Additional Material: #1 (#2 min.)}}
+\newcommand{\SubSectionInformational}[1]{\subsection{#1}}
+\newcommand{\SubSection}[1]{\subsection{#1}}
+\newcommand{\SubSectionWith}[2]{\subsection{#1 (#2)}}
+\newcommand{\SubSectionWithTime}[3]{\subsection{#1 (#2 min., #3)}}
+\newcommand{\SubSectionExplanation}[2]{\subsection{Explanation (#1 min., #2)}}
+\newcommand{\SubSectionExplanationOptional}[2]{\subsection{(Optional) Explanation (#1 min., #2)}}
+\newcommand{\SubSectionExercise}[2]{\subsection{Exercise: #1 (#2 min.)}}
+\newcommand{\SubSectionExerciseTask}[2]{\subsubsection{Task (#1 min., #2)}}
+\newcommand{\SubSectionExerciseThink}[1]{\subsubsection{Reading Task and Individual Thinking (#1 min.)}}
+\newcommand{\SubSectionExercisePair}[1]{\subsubsection{Pair Programming (#1 min., \ide{})}}
+\newcommand{\SubSectionExerciseIndividual}[1]{\subsubsection{Individual Programming (#1 min., \ide{})}}
+\newcommand{\SubSectionExercisePairDiscuss}[1]{\subsubsection{Pair Discussion (#1 min.)}}
+\newcommand{\SubSectionExercisePairDiscussShare}[1]{\subsubsection{Pair Programming, Discussion and Share Solution (#1 min.)}}
+\newcommand{\SubSectionExerciseShare}[1]{\subsubsection{Share Solution (#1 min., \ide{})}}
+\newcommand{\SubSectionExerciseShareSolution}[2]{\subsubsection{Share Solution (#1 min., #2)}}
+\newcommand{\SubSectionExerciseSolution}[2]{\subsubsection{Solution (#1 min., #2)}}
+
+\newcommand{\listofpreparationtasks}{Prepare Before the Class}
+\newlistof{preparationtask}{lex}{\listofpreparationtasks}
+
+\mdfdefinestyle{Preparation}{%
+frametitle={Preparation},
+backgroundcolor=black!10,
+bottomline=false,
+topline=false,
+rightline=false,
+leftline=false
+}
+\newenvironment{Preparation}{%
+\newcommand{\PreparationBeforeClass}[1]{%
+\addcontentsline{lex}{preparationtask}{$\square$ ##1}%
+$\square$ ##1\\}
+\newcommand{\PreparationInClass}[1]{$\square$ ##1\\}
+\begin{mdframed}[style=Preparation]%
+}{%
+\end{mdframed}%
+}
+
+\mdfdefinestyle{Question}{%
+frametitle={Question},
+}
+\newenvironment{Question}{%
+\newenvironment{Answer}{\hfill\\[1em]\strong{Possible Answer}\\}{}
+\newenvironment{OnlyAnswer}{\hfill\\[1em]\strong{Answer}\\}{}
+\begin{mdframed}[style=Question]%
+}{%
+\end{mdframed}%
+}
+
+
+\mdfdefinestyle{Explanation}{%
+backgroundcolor=black!5,
+}
+\newenvironment{Explanation}{%
+\begin{mdframed}[style=Explanation]%
+}{%
+\end{mdframed}%
+}
+
+\newenvironment{Objectives}{%
+\section*{Objectives}
+
+The objectives of this exercise session are:
+\begin{enumerate}}{\end{enumerate}}
+
+\newenvironment{SeenInClass}{%
+\section*{Seen in class}
+During the last class, students have seen:
+}
+
+% Some commands copied from the exam.
+\newcommand{\rmin}{\mathrm{min}}
+\newcommand{\rmax}{\mathrm{max}}
+\newcommand{\boxx}[3]{\begin{minipage}[c][#3]{#2}#1~ \end{minipage}}
