@@ -26,6 +26,10 @@
 %pretty enumerations
 \usepackage{enumerate}
 
+\usepackage{physics}
+
+\usepackage{mathtools}
+
 %pictures 
 \usepackage{graphicx}
 %\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
@@ -288,10 +292,10 @@ backgroundcolor=black!5,
 \end{mdframed}%
 }
 
-\newenvironment{Objectives}{%
-\section*{Objectives}
+\newenvironment{Theory}{%
+\section*{Theory}
 
-The objectives of this exercise session are:
+The theory points of this exercise session are:
 \begin{enumerate}}{\end{enumerate}}
 
 \newenvironment{SeenInClass}{%
@@ -299,7 +303,10 @@ The objectives of this exercise session are:
 During the last class, students have seen:
 }
 
+
+
 % Some commands copied from the exam.
 \newcommand{\rmin}{\mathrm{min}}
 \newcommand{\rmax}{\mathrm{max}}
 \newcommand{\boxx}[3]{\begin{minipage}[c][#3]{#2}#1~ \end{minipage}}
+

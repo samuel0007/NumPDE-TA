@@ -4,183 +4,96 @@
 
 \ExerciseClass{1}
 
-\marginnote{%
-The objectives section lists the goals we aim to achieve with this
-exercise class. It is mostly up to you, teaching assistants, to decide
-how you are going to achieve these goals. To save your time, we have
-prepared a lesson plan with classroom activities that aim to achieve the
-listed goals. You can choose whether you are going to use the provided
-activities or design your own, whether you are going to follow the given
-order or do the activities in a different one. In rare cases, the lesson
-plan will contain activities, which you have to do (for example,
-self-assessments); they are marked in red.}[1cm]
+\begin{Theory}
+\item Elastic Membranes
+\item Electrostatic Fields
+\item Quadratic Minimization Problems
+\item (Will be done in Week 2) Sobolev spaces
+\item (Will be done in Week 2) Linear Variational Problems
+\end{Theory}
 
-\begin{Objectives}
-\item \label{o:welcome}
-    Create a welcoming atmosphere for your students.
-\item \label{o:administrative}
-    Explain to students how the course is organised.
-\item \label{o:expert}
-    Explain to students how to use \Expert{}.
-\item \label{o:assess}
-    Assess the prior programming knowledge of your students.
-\end{Objectives}
+\section*{Exercises}
 
-\marginnote{%
-The lesson plan contains a large margin which you can use for your
-notes. If you know \LaTeX, you can also edit the document directly by
-using the GitLab web IDE. The source code is available at
-\url{https://gitlab.inf.ethz.ch/OU-LECTURERS/teaching/computer-science-introduction/}.
-GitLab should automatically build the PDF each time you commit your
-changes. If you have any questions, do not hesitate to contact
-the head TA.}[2em]
-\listofpreparationtask
+The exercises reviewed in this exercise class are:
+\begin{itemize}
+    \item Problem 0-1: Setting up implementation environment for NumPDE course (41 min)
+    \item Problem 0-2: Using the GDB Debugger (80 min)
+    \item Problem 1-1: Quadratic Functionals, only sub-problems a) b) d) g) (50 min)
+\end{itemize}
 
-\marginnote{The time in parenthesis gives an estimate how long a
-particular section should take. When reviewing the instructions, please
-check if the estimate makes sense to you. This white space on the side
-can be used for your notes.}[3.5cm]
+% \listofpreparationtask
+
+\textbf{Recommendation:} Keep 1,2 and 3 under 30 minutes as to be able to make them have a working installation by the end of the exercise session.
+
 \tableofcontents
 
 \newpage
 
 \OptionalSection{Introduction}{20}
 
-\marginnote{%
-The text in grey boxes are directed at you, teaching assistants. They
-provide checklists and additional explanations.}[0.5cm]
+\SubSectionWith{Introduce Yourself}{1min}
 
-\begin{Preparation}
-    \PreparationBeforeClass{%
-        Download the slides with the organisational information.}
-    \PreparationBeforeClass{%
-        Check early enough if the beamer works and the slides and
-        programming environment are properly visible.}
-\end{Preparation}
+\url{https://polybox.ethz.ch/index.php/s/qhIJVzhSKtYg3QY/download}.
 
-\SubSectionWithTime{Introduce Yourself}{2}{\slides}
+\SubSectionWith{Introduce the topic}{9min}
 
-Welcome your students. Show the \slide{2} and briefly introduce yourself
-to your class\footnote{If you are interested you can find some advice
-how to start the first class in the following handout:
-\url{https://polybox.ethz.ch/index.php/s/qhIJVzhSKtYg3QY/download}.}:
+Choose one or two example PDEs and its applications in the real world as well as a live vizualisation. Here are two basic examples:
 \begin{enumerate}
-    \item
-        Say your name.
-    \item
-        Say what are you studying and why it is interesting to you (in
-        simple words!).
+
+\item 
+\begin{enumerate}
+    \item Prepare by showing a picture of the fur of a cat and having the reaction diffusion equation written on the blackboard. Ask the students about the relation between both.
+    \item Introduce a reaction system with diffusion: $$(\xrightarrow{f(1-u)} u) + 2v \xleftrightarrow{} 2v + (v \xrightarrow{k+f})$$ i.e u has feed rate f(1-u), v kill rate k+f, and one u and two v reacts to form 3 v. u and v are chemicals diffusing in some liquid solution.
+    \item Relates it to the reaction Diffusion Equation. Give the intuition for diffusion.
+    \begin{equation}
+     \pdv{u}{t} = {D}_{1}\Delta u - uv^2 + f(1-u)
+     \quad
+     \pdv{v}{t} = {D}_{2}\Delta u + uv^2 - (k+f)v
+    \end{equation}
+    \item Show vizualization: \url{https://n.ethz.ch/~samrusso/#/algo}
 \end{enumerate}
 
-Also say what programming experience you have and why do you think this
-course is important.
+\item
+\begin{enumerate}
+    \item Prepare by showing a picture of a plane or a rocket launch and having the incompressible euler equation written on the blackboard. Ask the students about the relation between both.
+    \item Briefly introduce the incompressible euler equation $\pdv{u}{t} + u \cdot \nabla{u} + \nabla{p} = 0, \quad \nabla \cdot u = 0$. You can for example give the intuition about advection and how it relates to the PDE.
+    \item Show vizaluation \url{https://n.ethz.ch/~samrusso/#/algo}
+\end{enumerate}
 
-\SubSectionWithTime{Get to Know Your Students}{15}{\slides}
+\end{enumerate}
 
-Keep the same slide with questions (\slide{2}) and ask each student to
-very briefly answer both of them (30 seconds per
-student)\footnote{This learning activity is called “Whip (Around)” and
+
+
+\SubSectionWith{Get to Know Your Students (optional)}{10min}
+
+Put some get-to-know basic question (what is your OS, what are you expactations for this your course, what was your favorite course so far, what is your favorite field of application for CSE, ...) on the board and make every student answer it. It might seems like a "waste of time" but making every student speak at least once in their first exercise session will get them used to speaking in this particular and is important to break the ice\footnote{This learning activity is called “Whip (Around)” and
 it was taken from Kimberly D. Tanner paper “Structure Matters:
 Twenty-One Teaching Strategies to Promote Student Engagement and
 Cultivate Classroom Equity”
 (\url{https://polybox.ethz.ch/index.php/s/sSwgHBCQgihxC3m/download}).}.
 
-\MandatorySection{Administrative Matters}{15}
+\MandatorySection{Administrative Matters}{10}
 
-\SubSectionWith{High Level Course Organisation}{\slides}
+\SubSection{General infos}
 
-\marginnote{%
-The quoted text is the text that you should tell to students \strong{in
-your own words}.}[1cm]
-
-\slide{3}:
 \begin{quote}
-    The primary objective of this course is to learn programming C++.
-
-    We are going to check whether you achieved this objective in the
-    exam during the winter examination session.
-
-    To perform well in the exam, you need to be able to program and to
-    deal with the exam environment.
-
-    To help you to learn to deal with both of them, we provide several
-    “services”: lectures, weekly and bonus exercises, exercise sessions,
-    self-assessments and StudyCenter.
+    - Course structure: one exercise class, one Q\&A, online videos, lecture notes, problem notes (come from old exams), script. Explain them what was your way of dealing with the different material during the time you took NumPDE. Show them the Discuna platform and how they can directly link their question to the document.
+    
+    - Semester-Exams: Explain the importance of preparing well for the mid term and end term. No helping sheets allowed. Good as it forces you to keep the pace with the course.
+    
+    - Final-Exam: Explain the structure of the final exam: (30'-45') reading time, 3 hours written, full script available, no helping sheets allowed.
 \end{quote}
 
 \quest
 
-\SubSectionWith{Weekly Schedule}{\slides}
+\SubSection{Exercise Sessions}
 
-\slide{4}:
 \begin{quote}
-    New exercises are released every Monday.
-
-    Then, there is a lecture covering the material necessary to solve
-    the exercises.
-
-    We are going to practice this material in the first exercise session
-    that follows the lecture.
-
-    If you have questions about the material, you can come to StudyCenter 
-    (check the website on which days it is offered) to ask questions.
-
-    You have ["one week" if IFMP/CSE else "two weeks"] to solve the exercises. Please note that the
-    deadline is on Monday 18:00 and that late submissions are not accepted.
-
-    After the exercise submission deadline, I will provide feedback to
-    your weekly exercise submissions. We will discuss the most common
-    misconceptions in the exercise session that is going to be one week
-    after the submission deadline.
-\end{quote}
-
-\quest
-
-\SubSectionWith{Weekly and Bonus Exercises}{\slides}
-
-\slide{5}:
-\begin{quote}
-    All exercises will be managed in our online platform \Expert{}.
-
-    There are two types of exercises. The first type of exercises is
-    weekly exercises. The tasks of weekly exercises are usually very
-    small and the purpose of them is to practice the material that was
-    given in the lecture. By solving these exercises you will earn
-    experience points.
-
-    By earning enough experience points, you can unlock bonus exercises.
-    On \Expert{}, you can see which weekly exercises give you experience
-    points for which bonus tasks. As a rule of thumb, you will need to
-    obtain about two thirds of all possible experience points to unlock
-    the bonus exercise.
-
-    The purpose of bonus exercises is to practice combining knowledge
-    from different topics. There are going to be three bonus exercises.
-    Obtaining 2/3 of possible points from bonus exercises allows earning
-    a maximum bonus of 0.25 towards your final grade.
-
-    It is important to remember that for solving exercises, it is 
-    sufficient to use the constructs that were introduced in the course. 
-    Furthermore, pay attention not to use constructs that are forbidden 
-    in the task description. Note that the autograder might impose 
-    further restrictions (such as not using global variables) that might 
-    not be explicitly stated in the task description. Further note that 
-    warnings are treated as errors. Thus, check the output of the autograder 
-    carefully to avoid getting 0 points.
-\end{quote}
-
-\quest
-
-\SubSectionWith{Exercise Sessions}{\slides}
-
-\slide{7}:
-\begin{quote}
-    The purpose of the exercise sessions is to prepare you for solving
-    future and past exercises.
-
-    This means that during the exercise sessions we will revise some of
-    the topics you need to solve future exercises and discuss common
-    misunderstandings of past exercises.
+    - Explain them how they can hand-in their exercises: Moodle, email or GitHub issues.
+    - Tell them how you will structure your exercise class (theory, exercises, etc.)
+    - Set the environment for them to feel free to ask questions
+    
+    (e.g., directly from the intro to C++ lesson plan)
 
     Your active participation is important! We plan to have mostly
     interactive classroom activities and constructive discussion during
@@ -198,218 +111,88 @@ your own words}.}[1cm]
 
 \quest
 
-\begin{Explanation}
-    If you cannot answer a particular question you got from students,
-    feel free to forward it to the head TA or lecturers.
-\end{Explanation}
+\OptionalSection{Quadratic Minimization Problems}{20}
 
-\SubSectionWith{StudyCenter}{\slides}
+\SubSectionWith{Introduction}{15min} 
 
-\slide{8}:
-\begin{quote}
-    The student association organizes so called StudyCenter. The idea of
-    this StudyCenter is that you can come and ask TAs questions which
-    you did not have a chance to ask during the exercise session.
-\end{quote}
-
-\quest
-
-\SubSectionWith{Self-Assessments}{\slides}
-
-\slide{9}:
-\begin{quote}
-    The purpose of self-assessments is to let you to get familiar with
-    the exam format and to get a chance to see where you have gaps.
-
-    There are going to be five self-assessments and some of them will
-    take place at the beginning of the exercise sessions.
-
-    Today we will have a pre-course self-assessment. Its purpose is to
-    better know your prior knowledge so that we can optimize the course
-    for you, so no reason for you to worry about it.
-
-    Next week, we will have the first real self-assessment. It will
-    cover the material from the C++ tutorial, which you can find on the
-    course website.
-\end{quote}
-
-\quest
-
-\SubSectionWith{Info and Contact}{\slides}
-
-\slide{10}:
-\begin{quote}
-    All information I presented can be found on the course website. More
-    specifically, please read the organisational information sheet.
-
-    If you have any questions about the course content, you can either
-    ask during the class or in the StudyCenter.
-
-    If you have any questions about exercises, ask me.
-
-    If you have any administrative questions, ask the head assistant.
-\end{quote}
-
-\quest
-
-\OptionalSection{How to use \Expert{}}{10}
-
-\begin{Explanation}
-    The goal of this activity is to ensure that all students can access
-    \Expert{} and know how to use it.
-\end{Explanation}
-
-\SubSectionWithTime{Hello World}{10}{\ide}
-
-\begin{Preparation}
-    \PreparationBeforeClass{%
-        Check that you have internet and can access \Expert{}.}
-    \PreparationBeforeClass{%
-        Make sure that you do not show the completed tasks of the first
-        exercise. You can delete your existing code by clicking the
-        trash bin icon next to the exercise.}
-\end{Preparation}
-
-Ask students to take out their laptops and follow you (do not forget to
-ask if everyone successfully completed the step):
 \begin{enumerate}
-    \item Open \url{https://expert.ethz.ch} and navigate to the "Exercises" 
-        tab.
-    \item
-        Click on “Task 1: Hello World”, this will open the
-        task in the IDE.
-    \item
-        Show that the students can show/hide the task description by
-        clicking on “Task”.
-    \item
-        Click on “hello.cpp” to open the file for editing.
-    \item
-        Ask students to dictate what you should write.
-    \item
-        Show that the students can compile the program by clicking on a
-        green gear icon.
-    \item
-        Show that the students can run the program by clicking on a
-        green triangle icon.
-    \item
-        Show that the students can run our tests by clicking on a green
-        flask icon.
-    \item
-        Show that the students can submit their solution by clicking on
-        “Create new submission”. Tell the students that you will provide
-        feedback about their best submission and that they should not
-        forget to submit.
-    \item
-        \strong{Important (new!):} explain to students that their solutions
-        must pass all tests in order for them to get XP.
-    \item
-        \strong{Important (new!):} also say to the students that in the
-        exam only compiling programs will be accepted and that we are
-        going to use different tests for determining the final grade.
-    \item
-        \strong{Important:} show to students that the auto-grader can be
-        sometimes very picky. For example, that it does not accept the
-        program if the exclamation mark (“!”) is missing.
+    \item 
+Introduce your favorite energy potential, e.g. 1d elastic string under vertical loading
+\begin{equation}
+    J_s(u) = \int_a^b \frac{1}{2}\sigma(x) (\frac{du}{dx}(x))^2 - f(x)u(x) dx
+\end{equation}
+
+From Hook's law on strain energy on an rod with nodes $x_i$:
+\begin{equation}
+    \epsilon = \frac{\Delta l_i}{L_i} = \frac{u(x_{i+1}) - u(x_i)}{x_{i+1} - x_i} \xrightarrow{\Delta x \rightarrow 0} \frac{du}{dx}(x)
+\end{equation}
+\begin{equation}
+    E_{elastic} = \frac{1}{2}\sigma(x)\epsilon^2
+\end{equation}
+
+With $u(x) = x - x'$ being the displacement field from original to deformed state.
+
+\item
+Introduce Equilibrium principle: system tends to minimum energy. Ask to the students what is missing in this equation:
+\begin{equation}
+    u = argmin \ J_s(v)
+\end{equation}
+
+Configuration space is missing, introduce configuration space: space (=set) of functions that we want to search, depends on the problem we are solving. E.g., for 1d string we want it to be continuous:
+\begin{equation}
+    V = \{u \in C^0([a, b]), u(a) = u_0, u(b) = u_1\}
+\end{equation}
+
+Ask the students what is the problem with configuration space and the potential presented: we are asking for the derivative of u but our configuration space includes non-differentiable functions!
+Thus we need to constrain our space more (draw example of $C^1_{pw}$ function).
+
+\begin{equation}
+    V = \{u \in C^1_{pw}([a,b]), u(a) = u_0, u(b) = u_1\}
+\end{equation}
+
+\item Introduce bilinear forms, p.d $a(v,v) > 0 and a(0, 0) = 0$ and s.p.d $a(v,v) \geq 0$. For bilinear forms, give them the trick that the coefficients of $a(a+b, c+d)$ behave like the one of a multiplication $(a+b)*(c+d)$.
+
 \end{enumerate}
 
-\quest
 
-Remind to students that at home they should do the C++ tutorial linked
-on the website.
 
-\MandatorySection{Self-Assessment 0}{35}
+\SubSectionWith{Example solving}{3min}
 
-\begin{Preparation}
-    \PreparationBeforeClass{%
-        Check that you can access Self-Assessment 0.}
-\end{Preparation}
+Solve subexercise 1.b. Show them how you can find a counter example: you want a second derivative that is not zero and a first derivative that is negative.
 
-\begin{Explanation}
-    Since this is an introductory programming course, the students are
-    not required to have any prior programming experience. Therefore,
-    try to make sure that students who do not have any prior programming
-    experience do not feel demotivated.
-\end{Explanation}
+\MandatorySection{Setting up coding environment}{90min}
 
-\strong{Before} starting with the self-assessment, please tell students
-the following:
+This might be a struggle for some students, so keep your patience and try to help them as best as you can. Don't hesitate to ask if someone had the same problem in class and try to make them cooperate and help each other as you might be easily overwhelmed otherwise.
 
-\begin{quote}
-    We know that some of you learned to program in school. However, we
-    neither know how many of you learned programming, nor at which
-    level. Therefore, to make the course more relevant and interesting,
-    we would like learn about your programming experience.
+Recommandation of setup:
+\begin{enumerate}
+    \item CLion
+    \item VSCode + CMake extension + gdb pretty eigen
+\end{enumerate}
 
-    The sole purpose of this assessment is to improve the course and,
-    therefore, your performance is not going to have any consequences
-    for you. Also, if you have no experience in programming, do not
-    worry; this is expected. However, even if you have no experience, we
-    still encourage you to at least try to guess the answers.
-\end{quote}
+\SubSection{Linux setup}
 
-Ask students to open the self-assessment and start working on it.
 
-\strong{After} the self assessment, please tell students the following:
+\SubSection{Windows Setup}
+The students might not be able to install cmake or a compiler. Recommend them to use WSL or a VM to a Unix-based distribution. WSL is straightforward to install and more lightweight than an usual VM and works very well with VSCode and CLion. 
 
-\begin{quote}
-    If you are interested, you can see the master solution of the
-    self-assessment in Moodle directly. During this course you will
-    learn all the concepts tested in this assessment and many more.
+Typical setup for VSCode:
+\begin{enumerate}
+    \item Install Ubuntu through WSL through admin terminal: \$ wsl --install
+    \item Install WSL and CMake extension in VSCode
+    \item Open Ubuntu (e.g. from start menu) and git clone the NPDECODE repo. 
+    \item To open the VSCode server, from Ubuntu NPDECODE repo: ../NPDECODES:\$ code . 
+    \item From VSCode, the CMake extension will start its setup. Automatically uses WSL compiler.
+\end{enumerate}
+For CLion:
+\begin{enumerate}
+    \item Install Ubuntu through WSL through admin terminal: \$ wsl --install
+    \item Open Ubuntu (e.g. from start menu) and git clone the NPDECODE repo. 
+    \item Open CLion, Ctrl+O, WSL folders will be visible, open NPDECODE repo. CLion will automatically start to setup the CMake. For the CMake config, select the WSL compiler.
+\end{enumerate}
 
-    To even out the differences in your background knowledge, we have
-    prepared a tutorial that covers the basic concepts, which you will
-    find on the course website. You should go over it until the next
-    week when we are going to have the first real self-assessment. That
-    self-assessment will cover the material from the tutorial.
-\end{quote}
 
-\OptionalSection{Program Tracing with Python Tutor}{10}
+\SubSection{MacOS setup}
 
-\begin{Explanation}
-    Python Tutor is a tool that allows visualising program execution.
-    This is useful for beginners who are struggling to understand the
-    language semantics. Unfortunately, the service sometimes experiences
-    a downtime. If this happens during your exercise session, just do
-    the exercise entire on the blackboard and point out that such
-    service exists which they can use for checking their solutions.
-\end{Explanation}
-
-Either write or display via projector the following program on the
-blackboard (this program corresponds to question 6 from self-assessment
-0):
-\begin{lstlisting}
-int main() {
-  int x = 3;
-  int y = 8;
-  int z;
-  z = x;
-  x = y;
-  y = z;
-  return 0;
-}
-\end{lstlisting}
-
-On the blackboard, draw a table with local variables:
-
-\begin{tabular}{|l|p{2cm}|}
-\hline
-x &  \\ \hline
-y &  \\ \hline
-z &  \\ \hline
-\end{tabular}
-
-Together with students, execute the program step by step and fill in the
-variable values into the table similarly to the Python Tutor
-visualisation. However, instead of erasing the old value it is better to
-cross it out so that students can still see the old value.
-
-Show to students that they can use Python Tutor to check if they
-executed the program correctly:
-
-\url{http://pythontutor.com/cpp.html#mode=display}
-
-Direct link to the example:
-
-\url{http://pythontutor.com/cpp.html#code=int%20main%28%29%20%7B%0A%20%20int%20x%20%3D%203%3B%0A%20%20int%20y%20%3D%208%3B%0A%20%20int%20z%3B%0A%20%20z%20%3D%20x%3B%0A%20%20x%20%3D%20y%3B%0A%20%20y%20%3D%20z%3B%0A%20%20return%200%3B%0A%7D&curInstr=0&mode=display&origin=opt-frontend.js&py=cpp&rawInputLstJSON=%5B%5D}
 
 \end{document}
