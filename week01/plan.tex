@@ -77,7 +77,7 @@ Cultivate Classroom Equity”
 \SubSection{General infos}
 
 \begin{quote}
-    - Course structure: one exercise class, one Q\&A, online videos, lecture notes, problem notes (come from old exams), script. Explain them what was your way of dealing with the different material during the time you took NumPDE. Show them the Discuna platform and how they can directly link their question to the document.
+    - Course structure: one exercise class, one Q\&A, online videos, lecture notes (review questions \url{https://exams.vis.ethz.ch/exams/u3qv50iv.pdf}), problem notes (come from old exams), script. Explain them what was your way of dealing with the different material during the time you took NumPDE. Show them the Discuna platform and how they can directly link their question to the document.
     
     - Semester-Exams: Explain the importance of preparing well for the mid term and end term. No helping sheets allowed. Good as it forces you to keep the pace with the course.
     
@@ -135,7 +135,7 @@ With $u(x) = x - x'$ being the displacement field from original to deformed stat
 \item
 Introduce Equilibrium principle: system tends to minimum energy. Ask to the students what is missing in this equation:
 \begin{equation}
-    u = argmin \ J_s(v)
+    u = argmin_v \ J_s(v)
 \end{equation}
 
 Configuration space is missing, introduce configuration space: space (=set) of functions that we want to search, depends on the problem we are solving. E.g., for 1d string we want it to be continuous:
@@ -150,7 +150,7 @@ Thus we need to constrain our space more (draw example of $C^1_{pw}$ function).
     V = \{u \in C^1_{pw}([a,b]), u(a) = u_0, u(b) = u_1\}
 \end{equation}
 
-\item Introduce bilinear forms, p.d $a(v,v) > 0 and a(0, 0) = 0$ and s.p.d $a(v,v) \geq 0$. For bilinear forms, give them the trick that the coefficients of $a(a+b, c+d)$ behave like the one of a multiplication $(a+b)*(c+d)$.
+\item Introduce bilinear forms, p.d $a(v,v) > 0 \text{ and } a(0, 0) = 0$ and s.p.d $a(v,v) \geq 0$. For bilinear forms, give them the trick that the coefficients of $a(a+b, c+d)$ behave like the one of a multiplication $(a+b)*(c+d)$.
 
 \end{enumerate}
 
@@ -162,16 +162,40 @@ Solve subexercise 1.b. Show them how you can find a counter example: you want a 
 
 \MandatorySection{Setting up coding environment}{90min}
 
-This might be a struggle for some students, so keep your patience and try to help them as best as you can. Don't hesitate to ask if someone had the same problem in class and try to make them cooperate and help each other as you might be easily overwhelmed otherwise.
+This might be a struggle for some students, so keep your patience and try to help them as best as you can. Don't hesitate to ask if someone had the same problem in class and try to make them cooperate and help each other as you might be easily overwhelmed otherwise.\\
+Maybe suggest to fork repo instead of clone, to be able to push and add us to correct.
 
 Recommandation of setup:
 \begin{enumerate}
     \item CLion
-    \item VSCode + CMake extension + gdb pretty eigen
+    \item VSCode + CMake extension
 \end{enumerate}
+
+These setups work pretty well out of the box. The students just have to clone the repo and open the NPDECODES folder. They might need to configure they're CMake plugin in VSCode
+
 
 \SubSection{Linux setup}
 
+Setup for VSCode:
+\begin{enumerate}
+    \item Install extensions for vscode (c++, cmake tools, clangd (LSP, see below))
+    \item activate CMAKE\_EXPORT\_COMPILE\_COMMANDS in the cmake configuration i.e. call `ccmake .` in
+    the build folder (which is automatically created by cmake tools (maybe you need to build a file first)).
+    Then go to advanced options (i.e. in the cmake configuration type t) search and enable the option.
+    (Most likely the  LSP will not recognize the Lehrfem and Eigen library, with this option cmake will produce a file 
+    called "compile\_commands.json" this file will contain the necessary information for clangd to find these libraries)
+    \item Build any file with the cmake tools extension to rebuild the cmake configuration.    
+    \item Use the CMake tools extension to debug files.
+\end{enumerate}
+
+Setup for CLion
+\begin{enumerate}
+    \item apply for student license (\url{https://www.jetbrains.com/shop/eform/students})
+    \item open project (needs to be root folder, where base CMakeLists.txt is)
+    \item choose debug
+    \item CLion will do the rest for you
+    \item in top right can choose target, (choose non static to run/debug)
+\end{enumerate}
 
 \SubSection{Windows Setup}
 The students might not be able to install cmake or a compiler. Recommend them to use WSL or a VM to a Unix-based distribution. WSL is straightforward to install and more lightweight than an usual VM and works very well with VSCode and CLion. 
@@ -184,12 +208,31 @@ Typical setup for VSCode:
     \item To open the VSCode server, from Ubuntu NPDECODE repo: ../NPDECODES:\$ code . 
     \item From VSCode, the CMake extension will start its setup. Automatically uses WSL compiler.
 \end{enumerate}
+
+Typical errors and fixes:
+\begin{itemize}
+    \item No compilers installed in WSL -> make them install g++
+\end{itemize}
+
 For CLion:
 \begin{enumerate}
     \item Install Ubuntu through WSL through admin terminal: \$ wsl --install
     \item Open Ubuntu (e.g. from start menu) and git clone the NPDECODE repo. 
     \item Open CLion, Ctrl+O, WSL folders will be visible, open NPDECODE repo. CLion will automatically start to setup the CMake. For the CMake config, select the WSL compiler.
 \end{enumerate}
+
+Typical errors and fixes:
+\begin{itemize}
+    \item
+    WSL by default has only half of the RAM available. If the student computer only has 8GB of RAM, they might not be able to run CLion as it requires at least 4GB to run. One can change the default setting by creating a .wslconfig file in their user profile folder (can be access by windows+r -> \%UserProfile\%) and write in it:
+    \begin{lstlisting}
+    [wsl2]
+    memory=8GB
+    \end{lstlisting}
+\end{itemize}
+
+
+
 
 
 \SubSection{MacOS setup}

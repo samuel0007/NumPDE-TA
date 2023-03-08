@@ -1,0 +1,98 @@
+\input{../instructions.sty}
+
+\begin{document}
+
+\ExerciseClass{1}
+
+\begin{Theory}
+\item 2.2 Principles of Galerkin Discretization (25.48 min)
+\item 2.3 Case Study: Linear FEMfor Two-Point Boundary Value Problems (24.23 min)
+\item 2.4 Case Study: Triangular Linear FEMin Two Dimensions I (28.32 min)
+\item 2.4 Case Study: Triangular Linear FEMin Two Dimensions II (32.04 min)
+\end{Theory}
+
+\section*{Exercises}
+The exercises reviewed in this exercise class are:
+\begin{itemize}
+    \item Problem 1-8: A coupled reaction-diffusion problem (60 min)
+    \item Problem 2-1: Properties of Galerkin solutions (45 min)
+    \item Problem 2-2: Transformation of Galerkin Matrices (120 min)
+    \item Problem 2-3: Pointwise “Exact” Galerkin Solution (65 min)
+\end{itemize}
+
+% \listofpreparationtask
+
+
+\tableofcontents
+
+\newpage
+
+\OptionalSection{The quick way: from a PDE to a LSE}{15}
+
+\SubSectionWith{Introduction}{5min} 
+
+Reminder: Midterm chapter 1 + chapter 2 but not 2.8: Monday, March 27th, at 16:15
+Goals (from lecture script):
+\begin{itemize}
+    \item You must know in detail the idea of the Galerkin discretization of a linear variational problem and
+how it leads to a linear system of equations.
+\end{itemize}
+
+ % TODO: Find nice 2D linear FEM example
+
+ \SubSectionWith{Strong to Weak - the quick way}{10min}
+
+ Note: this is not done like in the script, but I think presenting the students with this more "high level", not getting in the nitty gritty details is a good way to give them the synthetic understanding that the script is mostly missing.
+
+We'll find the LSE for the equation $-u'' = f \quad in ]a,b[, \quad u(a)=u(b)=0$:
+\begin{enumerate}
+    \item Given any space $V$, $u \in V$ can be rewritten as some expansion in a basis:
+    $$ u(x) = \sum_i \mu_i \phi(x)$$
+    \item Plug in the PDE:
+    $$ - \sum_i \mu_i \phi_i(x)'' = f$$
+    \item Projection on arbitrary $\phi_j$ to find its coefficient (projection in $L^2$ is like for our usual finite dimensional vectors, if you want to find the value of a component you use the scalar product, here it's similar but just with "infinite vectors <-> functions", thus an integral)
+    $$ - \sum_i \mu_i \int_a^b \phi_i(x)''\phi_j(x) dx = \int_a^b f \phi_j(x) dx $$
+    \item PI:
+    $$ \sum_i \mu_i (\int_a^b \phi_i(x)'\phi_j(x)'dx - \phi_i'\phi_j |_a^b) = \int_b^a f\phi_j dx$$
+    \item BC = 0 + Set $$\int_a^b \phi_i(x)'\phi_j(x)'dx =: A_{i,j}$$ $$\int_b^a f\phi_j dx =: b_j $$
+    \item Rewrite as $$A_{:,j} \cdot \mu = b_j$$
+    \item Define arbitrary finite basis ${\phi_1, ..., \phi_N}$, and as previous equation was for $\forall j$ then we arrive at a $NxN$ LSE:
+    \item $$
+    \begin{bmatrix}
+    A_{:,1} \\
+    \vdots \\
+    A_{:, N}
+    \end{bmatrix} \cdot \mu =
+    \begin{bmatrix}
+        b_1 \\
+        \vdots \\
+        b_N
+    \end{bmatrix}
+    $$
+\end{enumerate}
+
+\OptionalSection{Galerkin Matrix}{10}
+
+\OptionalSection{Assembly}{10}
+
+\OptionalSection{Problem 0-2 MidTerm 21}{10}
+Goal: Compute Galerkin Matrix by hand
+\begin{enumerate}
+    \item Formula for basis function $b^h_1$
+    
+    \item Give dimension of the basis function space
+    \item Compute Element Matrix for cell $]0,h[$
+    \item Compute Full Galerkin Matrix for M=3
+\end{enumerate}
+
+
+ \OptionalSection{Quiz}{10}
+ This section is to gradually prepare the students for the midterm. Use the slides and give students a minute or two to solve the exercise and then look at the solution together.
+
+ 
+
+ 
+
+
+
+\end{document}

@@ -1,0 +1,253 @@
+\input{../instructions.sty}
+
+\begin{document}
+
+\ExerciseClass{1}
+
+\begin{Theory}
+\item Sobolev spaces
+\item Linear Variational Problems
+\item Equilibrium Models: Boundary Value Problems
+\item Diffusion Models: Stationary Heat Conduction
+\item Boundary Conditions
+\item Second-Order Elliptic Variational Problems
+\item Essential and Natural Boundary Conditions
+\end{Theory}
+
+\section*{Exercises}
+
+The exercises reviewed in this exercise class are:
+\begin{itemize}
+    \item Problem 1-1: Quadratic Functionals, only sub-problems a) b) d) g) (50 min)
+    \item Problem 1-2: Linear functionals on Sobolev spaces, a) b), e) f) g) only (90 min)
+    \item Problem 1-5: A second-order elliptic transmission problem in 1D (75 min)
+    \item Problem 1-6: Heat conduction with non-local boundary conditions (55 min)
+    \item Problem 1-7: A second-order boundary value problem for vector fields (110 min)
+\end{itemize}
+
+% \listofpreparationtask
+
+
+\tableofcontents
+
+\newpage
+
+\OptionalSection{A journey: From Quadratic Minimization Problems on Sobolev Spaces to PDEs through LVPs}{55}
+
+\SubSectionWith{Introduction}{5min} 
+
+Show on the blackboard your favorite quadratic minimization problem and a PDE. Note that we introduce ambiguity on purpose in the formulation for later use (no config space + no BDC). Note also that $\sigma$ doesn't depend on x for simplification.
+\begin{equation}
+    J_s(u) = \int_a^b \frac{1}{2}\sigma (\frac{du}{dx}(x))^2 - f(x)u(x) dx
+\end{equation}
+\begin{equation}
+    u = \text{argmin}_v \ J_s(v)
+\end{equation}
+\begin{equation}
+    -\sigma  u'' = f
+\end{equation}
+
+Start by stating what are the goals of this session:
+\begin{enumerate}
+    \item Give them an overview of the notions of quadratic minimization problems, LVPs and PDEs
+    \item Give them the tools to convert from one formulation of the problem to another
+    \item Have an intuitive understanding of Sobolev Spaces and their norms
+    \item Understand boundary conditions and which makes sense for a given PDE
+\end{enumerate}
+
+\SubSectionWith{Quadratic Minimization Problems}{5min}
+
+\begin{enumerate}
+    \item 
+Take your favorite energy potential, e.g. the 1d elastic string under vertical loading. Show an interactive example of it, e.g. the interactive elastic rod example from \url{https://gitlab.ethz.ch/yueliyue/pbs22/-/tree/master/2_fem}. 
+\begin{equation}
+    J_s(u) = \int_a^b \frac{1}{2}\sigma (\frac{du}{dx}(x))^2 - f(x)u(x) dx
+\end{equation}
+
+You could also optionally derive it. For this particular example, from Hook's law on the strain energy of an elastic rod with nodes $x_i$. 
+\begin{equation}
+    \epsilon = \frac{\Delta l_i}{L_i} = \frac{u(x_{i+1}) - u(x_i)}{x_{i+1} - x_i} \xrightarrow{\Delta x \rightarrow 0} \frac{du}{dx}(x)
+\end{equation}
+\begin{equation}
+    E_{elastic} = \frac{1}{2}\sigma\epsilon^2
+\end{equation}
+
+With $u(x) = x - x'$ being the displacement field from original to deformed state.
+
+\item
+Introduce Equilibrium principle: a system tends to its minimum energy configuration. Ask to the students what is missing in the minimization equation that is on the board:
+\begin{equation}
+    u = \text{argmin}_v \ J_s(v)
+\end{equation}
+
+Configuration space is missing, introduce configuration space: space (=set) of functions that we want to search, depends on the problem we are solving. E.g., for 1d string we want it to be continuous:
+\begin{equation}
+    V = \{u \in C^0([a, b]), u(a) = u_0, u(b) = u_1\}
+\end{equation}
+
+Ask the students what is the problem with the presented configuration space and potential: we are asking for the derivative of u but our configuration space includes non-differentiable functions!
+Thus we need to constrain our space more (draw example of $C^1_{pw}$ function).
+
+\begin{equation}
+    V = \{u \in C^1_{pw}([a,b]), u(a) = u_0, u(b) = u_1\}
+\end{equation}
+\end{enumerate}
+
+\SubSectionWith{Sobolev Spaces}{10min}
+Note: when we say that X is integrable, it means that the integral of X is smaller than $\infty$
+
+Motivation for Sobolev Spaces:
+\begin{enumerate}
+    \item Introduce potential$$J(u) = \int_0^1 \frac{1}{2}u(x)^2 - u(x) dx$$ with space for the problem $C^0_0([0,1])$.
+    \item Rewrite it as $$J(u) = \frac{1}{2}\int_0^1 (u(x) - 1)^2 - 1 dx$$.
+    \item Draw on the blackboard the sequence of functions that minimize J(u) starting by a parabola, from the intuition that we this is like a penalty for when $u(x)$ != 1, and u(x) is continuous, then every point should tend to 1. Our trial space of u is too small!
+    \item Introduce $L^2(\Omega)$, the space of square integrable functions, largest space in which this problem still make sense
+    $$\int_\Omega |v(x)|^2 dx < \infty $$ with associated norm
+    $$(\int_\Omega |v(x)|^2 dx)^\frac{1}{2} $$,
+    \item In this space (at the end we really only care about the norm), there exist a solution to the problem, but the boundary conditions are not compatible with this norm. We'll see later more about compatible BCs.
+\end{enumerate}
+End of motivation.
+
+Going back to our original potential:
+\begin{enumerate}
+    \item For our above problem, we saw that we needed more than just continuity as we're using derivatives in the expression. Introduce $H^1_0(\Omega)$, space of integrable functions with square integrable gradient with values 0 on the boundaries:
+    $$\int_\Omega ||grad \ v(x)||^2 dx < \infty $$ 
+    with norm
+    $$|v|_{H^1_0(\Omega)} = (\int_\Omega ||grad \ v(x)||^2 dx)^\frac{1}{2}$$
+    \item Note that here we are imposing BCs but we saw before in $L^2$ that they didn't make sense. Going back to the example from before, we see that the function has a very steep gradient at the borders: the minimizer won't be the one leaving out the BCs as it's gradient would be infinitely big!
+    \item Finally, quickly introduce $H^1(\Omega)$, with norm
+    $$||v||_{H^1(\Omega)} = |v|_{H^1(\Omega)} + ||v||_{L^2(\Omega)}$$
+    \item Introduce the meaning of super/subscripts in Sobolev spaces: superscript := derivative, subscripts := BCs.
+    \item Finally reassure the students that Sobolev spaces are simply a useful tool for energy minimization problems, that we're primarly interested in their norms and that one can see as a replacement of
+    $$L^2(\Omega) \rightarrow C^0_{pw}(\Omega), \quad H^1_0{\Omega} \rightarrow C^1_{pw,0}$$
+\end{enumerate}
+
+Correspondance between piecewiese continuity and sobolev spaces; norms of sobolev spaces
+
+
+\SubSectionWith{Linear Variational Problems}{10min}
+Introduce this section by explaining that this is the formulation that we prefer for solving quadratic minimization problems, as in finite dimensions solving a linear variational problem reduces to solving a LSE, which we learnt in NumCSE how to solve efficiently. 
+
+Introduce the definition of a finite quadratic functional on $\mathbb{R}^n$: $ J(\eta) = \frac{1}{2}\eta^TA\eta - \beta^T\eta + c$. Remember that we want to minimize this functional, thus we want to set its gradient to 0. Knowing that its gradient is given by (you don't have to derive it, just give the 1D intuition) $\textbf{grad} \ J = A\eta - \beta =^! 0 $, we have that $A\eta = \beta$ which is a LSE that we know how to solve from NumCSE. Finite dimensional quadratic functionals are thus a nice form for our initial quadratic minimization problem, but how do we arrive at them from our initial potential?
+
+
+\begin{enumerate}
+\item Introduce def. of linear form: $l : V_0 \to \mathbb{R}$, $l(\alpha u + \beta v) = \alpha l(u) + \beta l(v)$
+
+\item Introduce def. of bilinear forms: $a(\alpha u_1 + u_2, \beta v_1 + v_2 ) = \alpha \beta a(u_1, v_1) + \alpha a(u_1, v_2) + \beta a(u_2, v_1) + a(u_2, v_2)$. Five them the trick that the coefficients of $a(a+b, c+d)$ behave like the one of a multiplication $(a+b)*(c+d)$.
+\item Introduce p.d $a(v,v) > 0 \text{ and } a(0, 0) = 0$ and introduce s.p.d $a(v,v) \geq 0$. 
+\item Introduce quadratic functional $$J(u) := \frac{1}{2} a(u,u) - l(u) + c  \quad u \in V$$
+
+\item Recast $J_s(v)$ in term of a quadratic functional (match definition of quadratic functional with existing potential formulation):
+\begin{equation}
+    J_s(u) = \frac{1}{2} a(u,u) - l(u)
+\end{equation}
+\begin{equation}
+    \frac{1}{2} a(u,u) = \frac{1}{2}\sigma \int_a^b  \frac{du}{dx}(x)\frac{du}{dx}(x) dx \quad
+    l(u) = \int_a^b f(x)u(x) dx
+\end{equation}
+
+\item Remember how previously we took the gradient of our finite dimensional quadratic functional to find the solution of our minimization problem? As we are in infinite dimensions, we have to define an auxiliary function that help us understanding how the functional is affected by local changes in any "direction". u is the searched solution for our minimization problem, v an arbitrary "direction" in which we want to analyze the change of value of the functional, $\phi_v : \mathbb{R} \rightarrow \mathbb{R}$:
+
+\begin{equation}
+\begin{aligned}
+    \phi_v(t) &= J(u + tv) \\ &= \frac{1}{2}t^2a(v,v) + ta(u,v) + \frac{1}{2}a(u,u) - tl(v) - l(u)
+\end{aligned}
+\end{equation}
+
+As $\phi_v$ is an upward parabola, it's derivative is 0 at $t=0$: $$\phi'(0) = a(u,v) - l(v) = 0$$ for any arbitrary "direction" v, and thus this gives rise to what we call a linear variational problem: $$a(u,v) = l(v), \quad \forall v \in V_0$$
+\end{enumerate}
+
+This is still an infinite dimensional problem that we can't solve directly, but tell the students that we'll see next week the best way to reduce a quadratic functional on an infinite dimensional function space to a finite one to then be able to solve it as a LSE (=the essence of this course), keyword: Galerkin Projection. (Hype!)
+
+
+
+\SubSectionWith{Example solving}{5min}
+
+Solve subexercise 1.1.b as an additional example on how to identify quadratic functionals from energy potentials. Show them how you can find a counter example: you want a second derivative that is not zero and a first derivative that is negative.
+
+
+
+\SubSectionWith{Boundary Value Problems for PDEs}{10min}
+It's time to end our journey and formulate the problem in yet another way: the language of PDEs. PDEs are the language that you mostly see problems written as, arising naturally from a continuum approach (thinking about the infinitesimally small) to diverse physical problems. They are used in many fields of applications, and understanding them and knowing how to solve them numerically is a core component of this course. 
+PDEs arise naturally from variational problems:
+
+\begin{figure}[h]
+\includegraphics[]{week02/lvp_to_pde.png}
+\end{figure}
+
+At the end, we get:
+\begin{equation}
+    -u''(x) = f(x) \quad \forall x \in ]a, b[, \quad u(a) = 0, u(b) = 0
+\end{equation}
+
+Note that we call PDEs "Strong" formulations as we need extra smoothness requirements to express the problem.
+
+
+
+\SubSectionWith{Boundary Conditions}{10min}
+TODO
+Introduce Dirichlet + Neumann BC. Speak about Compatibility condition. Explain why essential vs natural respectively.
+
+
+
+\OptionalSection{Solving Exercises}{35min}
+
+\SubSectionWith{From Weak to Strong formulation in higher dimensions}{10min}
+
+Start with recap:
+
+\textbf{General product rule} \newline
+for all $\mathbf{j} \in (C^1(\Bar{\Omega}))^d, v \in C^1(\Bar{\Omega})$ holds $$\text{div} (\mathbf{j}v) = v\, \text{div}\, \mathbf{j} + \mathbf{j \cdot grad} v \quad\text{in}\, \Omega$$
+
+\textbf{Gauss` Theorem} \newline
+let $\mathbf{n} : \partial \Omega\rightarrow \mathbb{R}^d$ denote the exterior unit normal vector field on $\partial\Omega$ and $dS$ denote integration over a surface, we have $$\int_\Omega \text{div}\, \mathbf{j(x)dx} = \int_{\partial\Omega} \mathbf{j(x)\cdot n(x)}dS(x)\quad \forall \mathbf{j} \in (C^1_{pw}(\Bar{\Omega}))^d$$
+
+\textbf{Green`s first formula} \newline
+for all vector fields $\mathbf{j} \in (C^1_{pw}(\Bar{\Omega}))^d$ and functions $v\in C^1_{pw}(\Bar{\Omega})$ holds $$\int_\Omega \mathbf{j \cdot grad}v \mathbf{dx} = - \int_\Omega \text{div}\,\mathbf{j}v\mathbf{dx} + \int_{\partial\Omega} \mathbf{j \cdot n} v\, dS$$
+
+Solve exercise 1.6 a,b,d:
+
+
+\begin{enumerate}
+    \item Identify bilinear form and linear form
+    \item Argue why bilinear form is P.D.
+    \item Derive PDE from LVP
+\end{enumerate}
+
+\begin{figure}
+\centering
+    \includegraphics{week02/ex1_6_1.png}
+    \includegraphics{week02/ex1_6_sol.png}
+\end{figure}
+
+\SubSectionWith{From Strong to Weak formulation}{10min}
+
+TODO: FIND EXERCISE FROM EXAM
+
+\begin{figure}
+\centering
+\includegraphics[]{week02/pde_to_lvp_1.png}
+\end{figure}
+
+
+\SubSectionWith{On the continuity of the linear functional}{15min}
+
+TODO: PREPARE EQUATIONS + INTRODUCE EXISTENCE AND UNIQUENESS THM
+
+existence:
+
+energy norm, a bilinear s.p.d
+$$||u||_a := (a(u,u))^\frac{1}{2}$$
+existence of solution: linear functional has to be bounded wrt to the energy norm $$l(u) \leq C||u||_a$$
+
+Multiplicative Trace Inequality, Pointcarré-Friedrich Inequality, CSI, Triangle Inequality
+
+Show how linear functional of exercise 1.6 is bounded with respect to the energy norm induced by bilinear form a.
+
+\begin{figure}
+    \centering
+    \includegraphics{week02/ex_1_6_c.png}
+\end{figure}
+
+\end{document}
