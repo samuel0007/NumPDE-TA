@@ -34,11 +34,10 @@ The exercises reviewed in this exercise class are:
 Reminder: Midterm chapter 1 + chapter 2 but not 2.8: Monday, March 27th, at 16:15
 Goals (from lecture script):
 \begin{itemize}
-    \item You must know in detail the idea of the Galerkin discretization of a linear variational problem and
-how it leads to a linear system of equations.
+    \item You must know in detail the idea of the Galerkin discretization of a linear variational problem and how it leads to a linear system of equations.
 \end{itemize}
 
- % TODO: Find nice 2D linear FEM example
+ Show them the result (not the code) of the quick-fem.py script (can be found in the folder of this lesson plan). Goal of first part of this session is to be able to simulate by yourself using FEM.
 
  \SubSectionWith{Strong to Weak - the quick way}{10min}
 
@@ -71,28 +70,113 @@ We'll find the LSE for the equation $-u'' = f \quad in ]a,b[, \quad u(a)=u(b)=0$
     $$
 \end{enumerate}
 
-\OptionalSection{Galerkin Matrix}{10}
+\OptionalSection{Toward computation of the Galerkin Matrix}{20}
+\SubSectionWith{Galerkin Matrix}{2min.}
+From above, identify the Galerkin matrix. 
+Rewrite:
+$$A := [a(\phi_i, \phi_j)]_{i,j  = 1}^N$$
 
-\OptionalSection{Assembly}{10}
+Main goal of FEM: compute galerkin matrix in a smart and efficient way. 
+Important Note: Sparsity, and i-j represent interaction (=common support) between $\phi_i$ and $\phi_j$
 
-\OptionalSection{Problem 0-2 MidTerm 21}{10}
-Goal: Compute Galerkin Matrix by hand
+\SubSectionWith{Assembly}{8min.}
+Always have in mind the end goal: compute every entry of the Galerkin Matrix where i-j is interaction between $\phi_i$ and $\phi_j$.
+
+Note: tell the students to focus as they will have to solve an exercise just after about this.
+
 \begin{enumerate}
-    \item Formula for basis function $b^h_1$
+    \item Draw triangular mesh (two hexagons)
+    \item Draw in 3d the linear tent basis functions for one of the hexagon, same for the other. Color 2d hexagons with basis functions.
+    \item Write bilinear form
+    $$a(\phi_i, \phi_j) = \int_{\Omega}\phi_i\phi_j dy $$
+    \item Zoom on common support triangles and index interior with 1,2,3, vertices with i,j,k.
+    $$ \int_{K_1} \phi_i | K_1 \phi_j | K_1 dx = \int_{K21} \phi_i | K_2 \phi_j | K_2 dx$$
+    \item Introduce linear barycentric functions $\lambda_1, \lambda_2, \lambda_3$ as $ \phi_i | K_i$ (with correct indexing)
+    \item Take cell perspective and look at all its contributions to the Galerkin Matrix, connecting to previous drawings
+    $$ A(i,k) += \int \lambda_1 \lambda_2 dx $$, $$ A(i,i) += \int \lambda_1 \lambda_1 dx $$
+    \item Define element matrix $$[a(\lambda_i,\lambda_j)]_{i,j=1}^3$$   
     
+\end{enumerate}
+
+\SubSectionWith{Problem 0-2 MidTerm 21}{10min.}
+
+Advection equation on the board:
+$$\pdv{u(x,t)}{t} = - \pdv{u(x,t)}{x}$$
+Mesh + basis functions on the board, from 0 to 1, tent basis
+
+Derive LSE:
+$$u(x,t) = \sum_i \mu_i(t)\phi_i(x)$$
+Plug-in
+$$\sum_i \dot{\mu_i}(t)\phi_i(x) = - \sum_i \mu_i(t) \pdv{\phi}{x}(x)$$
+Project
+$$\sum_i \dot{\mu_i}(t) \int\phi_i(x)\phi_j(x)dx = - \sum_i \mu_i(t) \int\pdv{\phi_i}{x}(x)\phi_j(x)$$
+Orthogonality + vector notation $\forall j$
+$$\dot{\mu_j}(t) = - a (\phi_:, \phi_j) \cdot \mu(t)$$
+Matrix Notation
+$$\dot{\mu}(t) = - A\mu(t)$$
+
+
+Goal: Compute Galerkin Matrix by hand for linear advection bilinear form:
+$$a(\phi_i, \phi_j) = \int_0^1 \pdv{\phi_i}{x}(x)\phi_j(x)dx$$
+
+Ask students to (let them some individual time to think about it. Then compare with neighbors.)
+\begin{enumerate}
+    \item Give Formula for basis function $b^h_1$
     \item Give dimension of the basis function space
     \item Compute Element Matrix for cell $]0,h[$
     \item Compute Full Galerkin Matrix for M=3
 \end{enumerate}
 
+At the end, you can quickly show the structure of the quick-fem.py script, and fill with the students the element matrix values.
 
- \OptionalSection{Quiz}{10}
+\OptionalSection{Quiz}{10}
  This section is to gradually prepare the students for the midterm. Use the slides and give students a minute or two to solve the exercise and then look at the solution together.
 
+ \OptionalSection{Exercises}{45}
  
+\SubSectionWith{Offset function trick}{5min.}
+\begin{figure}[h]
+    \centering
+    \includegraphics{week03/ex_offset_function.png}
+\end{figure}
 
- 
+\SubSectionWith{Problem 2.1}{15min.}
+On Galerkin Orthogonality.
+\begin{enumerate}
+    \item Prove GO: $$a(u-u_h, v_h) = 0 \forall v_h \in V_{0,h}$$
+    \item Find estimate of $$J(u_h) - J(u)$$ Say why this is interesting (we try to be as close as possible to original solution wrt to energy)
+    \item Draw geometry intuition of orthogonality, and intuition why this is nice (we'll come back later on this with céa's later) (closest wrt. to energy)
+\end{enumerate}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics{week03/ex_2_1_c.png}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics{week03/ex_2_1_d.png}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics{week03/ex_G0.png}
+\end{figure}
+
+\SubSectionWith{Eigen Review}{15min}
+(Lot of master students that didn't do CSE BSc in the class (so no NumCSE), so this is necessary)
+
+- Sparse format, COO, CRS
+- Sparse LinAlg
+
+Then show and understand code  \url{https://github.com/erickschulz/NPDECODES/blob/master/lecturecodes/SimpleLinearFEM2D/matrix_assembler.cc}
+
+\SubSectionWith{(If Time left) 2.2 Transformation of Galerkin Matrix}{10min.}
+
+Main point: different basis, same solution ! Only difference is "how nice" (sparsity, condition) is the matrix.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{week03/ex_galerkin_transformation.png}
+\end{figure}
 
 
 \end{document}
